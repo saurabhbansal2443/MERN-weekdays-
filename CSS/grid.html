@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .cont{
+            height: 50vh;
+            width: 90vw;
+            background-color: skyblue;
+            border: 2px solid black ;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+           gap : 10px 20px ;
+        
+        }
+
+        .box{
+            border: 3px solid white ;
+        }
+
+        #id1{
+            grid-column: 1/4;
+        }
+
+        #id1:hover{
+            background-color: red;
+        }
+
+
+
+        #id2{
+            grid-row:2/4
+        }
+
+        #id5{
+            grid-column: 2/4;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="box" id="id1">Header </div>
+        <div class="box" id="id2">MENU </div>
+        <div class="box" id="id3">3</div>
+        <div class="box" id="id4">4</div>
+        <div class="box" id="id5">Footer </div>
+        
+    </div>
+</body>
+</html>

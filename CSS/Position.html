@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .cont{
+            height: 500px;
+            width: 500px;
+            background-color: grey;
+        }
+
+        .box{
+            height: 100px;
+            width: 100px;
+             /* position: relative; */
+        } 
+
+        #id1{
+            background-color: lightcoral;
+            /* position: relative;
+            left : 100px ;
+            top: 100px; */
+        }
+
+        #id2{
+            background-color: lightgreen;
+            /* position: absolute;
+            top: 200px ;
+            left: 100px;
+            z-index: 2; */
+
+        }
+
+        #id3{
+            background-color: lightsalmon;
+            /* position: fixed; */
+
+            position: sticky;
+            top: 100px;
+            left: 100px;
+
+        }
+
+        #id4{
+            background-color: lightskyblue;
+           
+        }
+
+        #id5{
+            background-color: lightgoldenrodyellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="box" id="id1">1</div>
+        <div class="box" id="id2">2</div>
+        <div class="box" id="id3">Sticky</div>
+        <div class="box" id="id4">4</div>
+        <div class="box" id="id5">5</div>
+    </div>
+
+    <div style="height: 300vh;"></div>
+</body>
+</html>

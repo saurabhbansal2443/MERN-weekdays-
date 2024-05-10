@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    
+console.log("start")
+
+// function makeMaggi( raw ){
+
+//     let promise = new Promise(function(resolve , reject){
+
+//         if(raw){
+//             setTimeout(function(){
+//                 resolve("Maggi is ready ")
+//             },2000) 
+//         }else{
+//             reject("Not possible")
+//         }
+//     })
+
+//     return promise;
+// }
+
+// makeMaggi("maggi").then(function(result){
+// console.log(result);
+// }).catch(function(err){
+//     console.log(err)
+// })
+
+
+function bakebread(raw){
+
+    let promise = new Promise(function(resolve , reject){
+
+        if(raw){
+            setTimeout(function(){
+                resolve("BakedBread is ready ")
+            },2000) 
+        }else{
+            reject("Not possible 1")
+        }
+    })
+
+    return promise;
+}
+
+function addSauce(bread){
+
+let promise = new Promise(function(resolve , reject){
+
+    if(bread){
+        setTimeout(function(){
+            resolve("saucedbread is ready ")
+        },2000) 
+    }else{
+        reject("Not possible 2")
+    }
+})
+
+return promise;
+}
+
+function addtopings(saucedBread){
+
+let promise = new Promise(function(resolve , reject){
+
+    if(saucedBread){
+        setTimeout(function(){
+            resolve("sandwich is ready ")
+        },2000) 
+    }else{
+        reject("Not possible 3")
+    }
+})
+
+return promise;
+}
+
+// bakebread("bread").then(function(bakebread){
+//      console.log(bakebread);
+//     return addSauce();
+// }).then(function(saucedBread){
+//      console.log(saucedBread);
+//     return addtopings(saucedBread)
+// }).then(function(sandwich){
+//     console.log(sandwich)
+// }).catch(function(err){
+//     console.log(err);
+// })
+
+
+// async/await 
+
+
+(async function (){
+
+    try {
+    let p1Ans  = await bakebread("bread"); 
+    console.log(p1Ans)
+    let p2Ans = await addSauce();
+    console.log(p2Ans)
+    let p3Ans = await addtopings(p2Ans)
+    console.log(p3Ans)
+    }catch(err){
+        console.log(err)
+    }
+
+})()
+
+
+
+
+
+
+console.log("end")
+</script>
+</html>

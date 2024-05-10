@@ -1,0 +1,19 @@
+
+
+// let arr = [10,20,30];
+
+
+// let [x,,y] = arr;
+
+// console.log(x,y)
+
+let obj = {
+    name : "saurabh",
+    age : 23 
+}
+
+let {age} = obj;
+
+let chnage = age ;
+
+console.log(age)

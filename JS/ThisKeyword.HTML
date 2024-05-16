@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script >
+    
+
+// let obj ={
+//     name : "saurabh",
+//     age :23 ,
+//     ageTeller : function(){
+//         console.log("normal function", this)
+//         return this.age ;
+//     },
+//     ageTeller2 : ()=>{
+//         console.log("Arrow function " , this)
+//         return this.age;
+//     }
+// }
+
+// console.log("outside the function " , this )
+// console.log(obj.ageTeller())
+// console.log(obj.ageTeller2())
+
+function abc(){
+    console.log(this)
+}
+
+let def = ()=>{
+    console.log(this)
+}
+
+
+abc()
+def()
+</script>
+</html>

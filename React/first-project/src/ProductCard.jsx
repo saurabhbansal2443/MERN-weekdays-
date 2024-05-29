@@ -1,7 +1,8 @@
-let ProductCard = ({ obj }) => {
+let ProductCard = ({obj }) => {
+   
   let { images, title, description, rating, category, price } = obj;
   return (
-    <div className="card h-[60vh] w-96 bg-base-100 shadow-xl border-2 m-4 border-red-600">
+    <div className="card h-[40vh] w-96 bg-base-100 shadow-xl border-2 m-4 border-red-600">
   <figure className="h-1/2"><img src={images[images.length-1]} alt="Shoes" /></figure>
   <div className="card-body h-1/2">
     <h2 className="card-title">

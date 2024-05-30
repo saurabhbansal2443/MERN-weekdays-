@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
@@ -9,6 +9,9 @@ import Contact from "./Contact";
 import Home from './Home.jsx'
 import ErrorPage from './ErrorPage.jsx'
 import SingleProduct from './SingleProduct.jsx'
+// import Food from './Food.jsx'
+
+let Food = lazy(()=> import ("./Food.jsx"))
 
 
 let Router = createBrowserRouter([
@@ -34,6 +37,11 @@ let Router = createBrowserRouter([
             {
                 path:"/product/:id",
                 element:<SingleProduct></SingleProduct>
+            },{
+                path : "/food",
+                element:(<Suspense fallback={<h1> ....Loading </h1>}>
+                    <Food></Food>
+                </Suspense>)
             }
 
         ],

@@ -1,25 +1,35 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Theme } from "./Utility/ThemeContext";
 
-let Navbar = ()=>{
-  // console.log("Navbar Page ")
-    return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link to="/"><span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            OneStop
-          </span></Link>
+let Navbar = () => {
+  let {theme , setTheme} = useContext(Theme);
 
-          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              <li className="text-white"> <Link to="/about"> About </Link></li>
-              <li className="text-white"><Link to="/Cart">Cart</Link></li>
-              <li className="text-white"><Link to="/Contact">Contact</Link></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    )
-}
+  let handleThemeChange = ()=>{
+    setTheme(theme =='light' ? "dark" : "light");
+  }
+let darkTheme = " navbar bg-base-100";
+let lightTheme = "navbar bg-white text-black"
+  return (
+    <div className={theme == "light" ? lightTheme : darkTheme}> 
+  <div className="flex-1">
+    <Link to="/" className="btn btn-ghost text-xl">OneStop</Link>
+  </div>
+  <div className="flex-none">
+    <ul className="menu menu-horizontal px-1 text-lg ">
+      <li><Link to="/cart">Cart</Link></li>
+      <li><Link to="/contact">Contact</Link></li>
+      <li><Link to="/about">About</Link></li>
+      <li className="text-red-700 font-bold"><Link to="/food">Food</Link></li>
+      <label className="flex cursor-pointer gap-4 mt-3">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+  <input onClick={handleThemeChange} type="checkbox" value="synthwave" className="toggle theme-controller"/>
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</label>
+    </ul>
+  </div>
+</div>
+  );
+};
 
-export default Navbar
-
+export default Navbar;

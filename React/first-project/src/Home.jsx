@@ -1,29 +1,23 @@
 
 import ProductCard from "./ProductCard";
-import { useState, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import ShimmerUI from "./ShimmerUI";
+import { Theme } from "./Utility/ThemeContext"
+import useGetAllProducts from "./Utility/useGetAllProducts";
 
 
 let Home = () => {
-    let[allData , setAllData] = useState([])
+  let [allData, setAllData] = useState([])
   let [ProductArray, setProductArray] = useState([]);
   let [searchText, setSearchText] = useState("");
 
-  let getData = async () => {
-    let data = await fetch("https://dummyjson.com/products");
-    let obj = await data.json();
-    setProductArray(obj.products);
-    setAllData(obj.products);
-  };
+  let arr = useGetAllProducts();
 
   useEffect(() => {
-    getData();
-  }, []);
+    setAllData(arr);
+    setProductArray(arr)
+  }, [arr])
 
-  useEffect(() => {
-    
-    console.log("useEffect 2 called ")
-  },[ProductArray]);
 
   let filterProductData = (fn) => {
     let data = allData.filter(fn);
@@ -51,14 +45,19 @@ let Home = () => {
 
   console.log("compoennet called ");
 
-  if(ProductArray.length == 0 ){
+  if (ProductArray.length == 0) {
     return (
-        <ShimmerUI></ShimmerUI>
+      <ShimmerUI></ShimmerUI>
     )
   }
 
+  let { theme, setTheme } = useContext(Theme);
+
+  let lightTheme = "border-2 border-red-600 w-screen  min-h-[93.7vh] bg-white text-2xl "
+  let darkTheme = "border-2 border-red-600 w-screen  min-h-[93.7vh] bg-gray-700 text-2xl "
+
   return (
-    <div className="border-2 border-red-600 w-screen  min-h-[93.7vh] bg-white text-2xl ">
+    <div className={theme == "light" ? lightTheme : darkTheme}>
       <div className="utility flex  justify-center m-5">
         <div className=" flex justify-around  w-full">
           <button
@@ -95,7 +94,7 @@ let Home = () => {
             className="btn btn-xs text-2xl sm:btn-sm md:btn-md lg:btn-lg"
             onClick={() => filterProduct("furniture")}
           >
-           Furniture
+            Furniture
           </button>
           <button
             className="btn btn-xs text-2xl sm:btn-sm md:btn-md lg:btn-lg"

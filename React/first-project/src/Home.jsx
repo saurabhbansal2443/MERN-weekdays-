@@ -4,6 +4,8 @@ import { useState, useContext, useEffect } from "react";
 import ShimmerUI from "./ShimmerUI";
 import { Theme } from "./Utility/ThemeContext"
 import useGetAllProducts from "./Utility/useGetAllProducts";
+import AddedProductInCart from "./Utility/AddedProductInCart";
+import { useSelector } from "react-redux";
 
 
 let Home = () => {
@@ -11,7 +13,9 @@ let Home = () => {
   let [ProductArray, setProductArray] = useState([]);
   let [searchText, setSearchText] = useState("");
 
-  let arr = useGetAllProducts();
+  let idsArray = useSelector((state)=>state.cart.ids)
+ 
+  let arr = useGetAllProducts(); 
 
   useEffect(() => {
     setAllData(arr);
@@ -51,14 +55,19 @@ let Home = () => {
     )
   }
 
-  let { theme, setTheme } = useContext(Theme);
+  let AddedComponent = AddedProductInCart(ProductCard) // its a HOC 
 
-  let lightTheme = "border-2 border-red-600 w-screen  min-h-[93.7vh] bg-white text-2xl "
-  let darkTheme = "border-2 border-red-600 w-screen  min-h-[93.7vh] bg-gray-700 text-2xl "
+  let { theme } = useContext(Theme);
+
+
+
+
+  let lightTheme = " w-screen  min-h-[93.7vh] bg-white text-2xl "
+  let darkTheme = " w-screen  min-h-[93.7vh] bg-gray-700 text-2xl "
 
   return (
     <div className={theme == "light" ? lightTheme : darkTheme}>
-      <div className="utility flex  justify-center m-5">
+      <div className="utility flex  justify-center  pt-3 ">
         <div className=" flex justify-around  w-full">
           <button
             className="btn btn-xs text-2xl sm:btn-sm md:btn-md lg:btn-lg"
@@ -106,7 +115,9 @@ let Home = () => {
       </div>
       <div className="cards flex flex-wrap justify-around">
         {ProductArray.map((obj) => (
-          <ProductCard obj={obj} key={obj.id}></ProductCard>
+
+          idsArray.find((id)=>obj.id == id ) == undefined ?  <ProductCard obj={obj} key={obj.id}></ProductCard>: <AddedComponent obj={obj} key={obj.id}></AddedComponent>
+         
         ))}
       </div>
     </div>

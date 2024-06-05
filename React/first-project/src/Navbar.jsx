@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { Theme } from "./Utility/ThemeContext";
+import {useSelector } from "react-redux";
 
 let Navbar = () => {
   let {theme , setTheme} = useContext(Theme);
 
+  let cartItem = useSelector((state) => state.cart.items)
+  // console.log(cartItem);
   let handleThemeChange = ()=>{
     setTheme(theme =='light' ? "dark" : "light");
   }
@@ -16,8 +19,8 @@ let lightTheme = "navbar bg-white text-black"
     <Link to="/" className="btn btn-ghost text-xl">OneStop</Link>
   </div>
   <div className="flex-none">
-    <ul className="menu menu-horizontal px-1 text-lg ">
-      <li><Link to="/cart">Cart</Link></li>
+    <ul className="menu menu-horizontal px-1 text-xl ">
+      <li><Link to="/cart">Cart<sup className="text-xl text-red-700 font-bold"> {cartItem.length } </sup></Link></li>
       <li><Link to="/contact">Contact</Link></li>
       <li><Link to="/about">About</Link></li>
       <li className="text-red-700 font-bold"><Link to="/food">Food</Link></li>

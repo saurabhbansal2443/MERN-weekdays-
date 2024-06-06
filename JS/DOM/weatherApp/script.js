@@ -9,22 +9,12 @@ let icon = document.getElementById("icon");
 
 let Api_key = "f4172c4f6fdb47baa5b125809241605";
 
-
 // https://api.weatherapi.com/v1/current.json?key=f4172c4f6fdb47baa5b125809241605&q=mumbai&aqi=no
-
-
 async function getData(city) {
-
     let data = await fetch(`https://api.weatherapi.com/v1/current.json?key=${Api_key}&q=${city}&aqi=no`);
     let obj = await data.json();
-
     updateUI(obj)
-
 }
-
-
-
-
 
 btn.addEventListener("click", () => {
     let inputCity = inputTag.value;

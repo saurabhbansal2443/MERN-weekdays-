@@ -1,26 +1,37 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Theme } from "./Utility/ThemeContext";
 import {useSelector } from "react-redux";
 
 let Navbar = () => {
   let {theme , setTheme} = useContext(Theme);
 
-  let cartItem = useSelector((state) => state.cart.items)
+  let totalProducts = useSelector((state) => state.cart.totalProducts)
   // console.log(cartItem);
-  let handleThemeChange = ()=>{
-    setTheme(theme =='light' ? "dark" : "light");
+  let handleThemeChange = ()=>{ // changing The Theme 
+    setTheme(theme =='light' ? "dark" : "light"); // statechanging set functions are async
+    // localStorage.setItem("Theme" , theme =='light' ? "dark" : "light")
   }
+
+
+  useEffect(()=>{
+    localStorage.setItem("Theme" , theme)
+  },[theme])
+
+  
+  
 let darkTheme = " navbar bg-base-100";
-let lightTheme = "navbar bg-white text-black"
+let lightTheme = "navbar bg-zinc-300 text-black"
   return (
+    
     <div className={theme == "light" ? lightTheme : darkTheme}> 
+   
   <div className="flex-1">
     <Link to="/" className="btn btn-ghost text-xl">OneStop</Link>
   </div>
   <div className="flex-none">
     <ul className="menu menu-horizontal px-1 text-xl ">
-      <li><Link to="/cart">Cart<sup className="text-xl text-red-700 font-bold"> {cartItem.length } </sup></Link></li>
+      <li><Link to="/cart">Cart<sup className="text-xl text-red-700 font-bold"> {totalProducts } </sup></Link></li>
       <li><Link to="/contact">Contact</Link></li>
       <li><Link to="/about">About</Link></li>
       <li className="text-red-700 font-bold"><Link to="/food">Food</Link></li>

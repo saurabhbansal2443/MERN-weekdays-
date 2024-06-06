@@ -28,7 +28,7 @@ let ProductCard = ({obj }) => {
   }  
 
   let darkTheme = "card h-[40vh] w-96 bg-base-100 shadow-xl  m-4 "
-  let lightTheme = "card h-[40vh] w-96 bg-yellow-50 shadow-xl m-4  text-black"
+  let lightTheme = "card h-[40vh] w-96 bg-zinc-300 shadow-xl m-4  text-black"
   return (
     <div className={theme == "light" ? lightTheme : darkTheme} onClick={handleClick}>
   <figure className="h-1/2"><img src={images[images.length-1]} alt="Shoes" /></figure>

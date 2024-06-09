@@ -17,3 +17,10 @@ let {age} = obj;
 let chnage = age ;
 
 console.log(age)
+
+// currying 
+
+let multiply = function (x,y){
+    return x*y ;
+}
+

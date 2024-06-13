@@ -25,6 +25,13 @@ let Home = () => {
 
   let filterProductData = (fn) => {
     let data = allData.filter(fn);
+    
+    if(data.length == 0){
+      let obj = {
+        id : "nodata"
+      }
+      data.push(obj)
+    }
     setProductArray(data);
   };
 
@@ -40,14 +47,16 @@ let Home = () => {
   };
 
   let searchProduct = () => {
-    let fn = (obj) =>
-      obj.title.toLowerCase().includes(searchText.toLowerCase());
+    let fn = (obj) =>obj.title.toLowerCase().includes(searchText.toLowerCase());
+
+   
+
     filterProductData(fn);
 
     setSearchText("");
   };
 
-  console.log("compoennet called ");
+
 
   if (ProductArray.length == 0) {
     return (
@@ -116,7 +125,7 @@ let Home = () => {
       <div className="cards flex flex-wrap justify-around">
         {ProductArray.map((obj) => (
 
-          idsArray.find((id)=>obj.id == id ) == undefined ?  <ProductCard obj={obj} key={obj.id}></ProductCard>: <AddedComponent obj={obj} key={obj.id}></AddedComponent>
+         obj.id == 'nodata' ? <h1> No products available </h1> :  idsArray.find((id)=>obj.id == id ) == undefined ?  <ProductCard obj={obj} key={obj.id}></ProductCard>: <AddedComponent obj={obj} key={obj.id}></AddedComponent>
          
         ))}
       </div>

@@ -1,20 +1,35 @@
+import User from "../Models/users.models.js";
+
 import fs from "fs";
 let data = JSON.parse(fs.readFileSync("/Users/saurabhbansal/Desktop/GFG batches /MERN-weekdays-/Backend/Data.json","utf-8")).users
 
-let createUser = (req, res) => {
+
+
+let createUser = async (req, res) => {
+  try{
     let newData = req.body;
-    data.push(newData);
-    res.send(newData)
+    console.log("user Data " , )
+    let newUser = new User(newData);
+
+   let data =  await newUser.save()
+
+   res.send(data);
+  }catch(err){
+    res.send({result : false , error : err.message})
+  }
   }
   
-  let allUserData = (req, res) => {
-    res.json(data);
+  let allUserData = async (req, res) => {
+    let data = await User.find({});
+    res.send(data)
   }
   
-  let getOneUser = (req, res) => {
-    let id = req.params.id;
-    let productData = data.find(obj=>obj.id==id);
-    res.json(productData);
+  let getOneUser = async (req, res) => {
+    // let id = req.params.id;
+    // let data = await User.findById(id);
+    let {email} = req.body;
+    let data = await User.findOne({email :email});
+    res.send(data)
   }
   
   let replaceUser = (req, res) => {

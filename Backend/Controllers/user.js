@@ -1,61 +1,97 @@
 import User from "../Models/users.models.js";
-
-import fs from "fs";
-let data = JSON.parse(fs.readFileSync("/Users/saurabhbansal/Desktop/GFG batches /MERN-weekdays-/Backend/Data.json","utf-8")).users
-
-
+import bcrypt from "bcrypt";
 
 let createUser = async (req, res) => {
-  try{
+  try {
     let newData = req.body;
-    console.log("user Data " , )
+    console.log("user Data ");
     let newUser = new User(newData);
 
-   let data =  await newUser.save()
+    let data = await newUser.save();
 
-   res.send(data);
-  }catch(err){
-    res.send({result : false , error : err.message})
+    res.send(data);
+  } catch (err) {
+    res.send({ result: false, error: err.message });
   }
-  }
-  
-  let allUserData = async (req, res) => {
-    let data = await User.find({});
-    res.send(data)
-  }
-  
-  let getOneUser = async (req, res) => {
-    // let id = req.params.id;
-    // let data = await User.findById(id);
-    let {email} = req.body;
-    let data = await User.findOne({email :email});
-    res.send(data)
-  }
-  
-  let replaceUser = (req, res) => {
-    let id = req.params.id;
-    let dataIdx = data.findIndex(obj=> obj.id==id);
-    data.splice(dataIdx, 1,{...req.body , id : id });
-    res.send(req.body)
-  }
-  
-  let updateUser = (req, res) => {
-    let id = req.params.id;
-    let dataIdx = data.findIndex(obj=> obj.id==id);
-     data.splice(dataIdx,1,{...data[dataIdx] , ...req.body})
-    // let prevObj = data[dataIdx]
-    // data[dataIdx] = {...prevObj , ...req.body}
-    res.send(data[dataIdx])
-  }
-  
-  let deleteUser = (req, res) => {
-    let id = req.params.id;
-    let dataIdx = data.findIndex(obj=> obj.id==id);
-    let prevObj = data[dataIdx]
-    data.splice(dataIdx , 1)
-    res.send(prevObj)
-  
-  }
+};
 
+let allUserData = async (req, res) => {
+  let data = await User.find({});
+  res.send(data);
+};
 
-  export {createUser , updateUser , deleteUser , getOneUser , replaceUser ,allUserData}
+let getOneUser = async (req, res) => {
+  // let id = req.params.id;
+  // let data = await User.findById(id);
+  let { email } = req.body;
+  let data = await User.findOne({ email: email });
+  res.send(data);
+};
+
+let replaceUser = async (req, res) => {
+  let { email } = req.body;
+  let data = await User.findOneAndReplace(
+    { email: email },
+    { ...req.body },
+    { new: true }
+  );
+  res.send(data);
+};
+
+let updateUser = async (req, res) => {
+  let { email } = req.body;
+  let data = await User.findOneAndUpdate(
+    { email: email },
+    { ...req.body },
+    { new: true }
+  );
+  res.send(data);
+};
+
+let deleteUser = async (req, res) => {
+  let id = req.params.id;
+  let data = await User.findByIdAndDelete(id);
+  res.send(data);
+};
+
+let loginUser = async (req, res) => {
+  res.send(" Login is working ");
+};
+
+let signupUser = async (req, res) => {
+  let { userName, email, password } = req.body;
+
+  try {
+    // checking is user present or not
+
+    let user = await User.findOne({ email: email });
+
+    if (user) {  // if user present then dono create data 
+      return res.send({ res: false, message: "user already exist " });
+    }
+
+    let salt = await bcrypt.genSalt(10); // creating salt for hashing 
+    let hashedPassword = await bcrypt.hash(password, salt); // creating hashed password 
+
+    let newUser = new User({ //creating new user 
+      userName : userName,
+      email : email,
+      password : hashedPassword,
+    })
+    let data = await newUser.save();   // saving newUser in dataBase 
+    return res.send(data);
+  } catch (err) {
+    res.send({ res: false, message: err.message });
+  }
+};
+
+export {
+  createUser,
+  updateUser,
+  deleteUser,
+  getOneUser,
+  replaceUser,
+  allUserData,
+  loginUser,
+  signupUser,
+};

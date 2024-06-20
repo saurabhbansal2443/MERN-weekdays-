@@ -7,6 +7,8 @@ import {
     updateUser,
     deleteUser,
     replaceUser,
+    loginUser,
+    signupUser
   }from "./../Controllers/user.js"
 
   let Router = express.Router();
@@ -14,8 +16,10 @@ import {
 Router.post("/", createUser)
 .get("/", allUserData)
 .get("/:id", getOneUser)
-.put("/:id", replaceUser)
-.patch("/:id", updateUser)
+.put("/", replaceUser)
+.patch("/", updateUser)
 .delete("/:id", deleteUser)
+.post("/login" , loginUser )
+.post("/signup" , signupUser )
 
 export default Router;

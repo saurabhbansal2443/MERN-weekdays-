@@ -11,6 +11,7 @@ import ErrorPage from "./ErrorPage.jsx";
 import SingleProduct from "./SingleProduct.jsx";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
+import ThemeContext from "./Utility/ThemeContext";
 // import Food from './Food.jsx'
 
 let Food = lazy(() => import("./Food.jsx"));
@@ -62,5 +63,7 @@ let Router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <ThemeContext>
   <RouterProvider router={Router}> </RouterProvider>
+  </ThemeContext>
 );

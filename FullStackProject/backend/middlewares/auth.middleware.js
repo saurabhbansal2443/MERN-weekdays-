@@ -1,10 +1,26 @@
+import jwt from "jsonwebtoken";
+import User from "../model/user.model.js";
 
+let auth = async (req, res, next) => {
+  let token = req.cookies?.Token;
 
-let auth = (req, res , next )=>{
+  try {
+    if (!token) {
+      return res
+        .status(401)
+        .send({ result: false, message: "User not authenticated " });
+    } else {
+      let { id } =  jwt.verify(token, process.env.PRIVATE_KEY);
 
-    console.log("This is response from middlware " , req.cookies.Token)
-    next();
+      let user = await User.findById(id);
 
-}
+      req.user = user;
 
-export default auth ;
+      next();
+    }
+  } catch (err) {
+    return res.send({ result: false, message: err.message });
+  }
+};
+
+export default auth;

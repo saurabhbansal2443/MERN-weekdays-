@@ -17,15 +17,14 @@ const Login= () => {
       password: "",
     },
     validationSchema: loginSchema,
-    onSubmit: (value, action) => {
+    onSubmit: (values, action) => {
      
-      console.log(value);
+      console.log(values);
 
       action.resetForm();
     },
   });
 
-  console.log(formik);
 
   return (
     <div className={theme == "light" ? lightTheme : darkTheme}>

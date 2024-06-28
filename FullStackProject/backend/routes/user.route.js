@@ -5,6 +5,7 @@ import {
   signup,
   getuser,
   updateuser,
+  logout 
 } from "../controller/user.controller.js";
 
 let Router = express.Router();
@@ -12,6 +13,7 @@ let Router = express.Router();
 Router.post("/signup", signup)
   .post("/login", login)
   .get("/getuser",auth ,  getuser)
-  .patch("/update", updateuser);
+  .patch("/update",auth ,  updateuser)
+  .get("/logout" ,auth,  logout )
 
   export default Router;

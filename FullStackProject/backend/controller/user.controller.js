@@ -24,14 +24,11 @@ let login = async (req, res) => {
       let token = await tokenGeneration(existingUser); // genertaing the token
       let option = { httpOnly: true, secure: true };
 
-      return res
-        .status(201)
-        .cookie("Token", token, option)
-        .send({
-          result: true,
-          message: "Login succesfull",
-          data: existingUser,
-        });
+      return res.status(201).cookie("Token", token, option).send({
+        result: true,
+        message: "Login succesfull",
+        data: existingUser,
+      });
     } else {
       return res
         .status(401)
@@ -44,6 +41,7 @@ let login = async (req, res) => {
 
 let signup = async (req, res) => {
   let { email } = req.body;
+  console.log(req.body)
 
   try {
     let existingUser = await User.findOne({ email: email });
@@ -68,11 +66,54 @@ let signup = async (req, res) => {
     return res.send({ result: false, message: err.message });
   }
 };
-
+// These controller  are only accessible after the Auth middleware
 let getuser = (req, res) => {
-  res.send("ok")
+  try {
+    let user = req.user;
+
+    return res.send({ result: true, message: "User data ", data: user });
+  } catch (err) {
+    return res.send({ result: false, message: err.message });
+  }
 };
 
-let updateuser = (req, res) => {};
+let updateuser = async (req, res) => {
+  if (!req.user) {
+    return res.send({ result: false, message: "Plese login " });
+  }
 
-export { login, signup, getuser, updateuser };
+  try {
+    let user = req.user;
+    let { _id } = user;
+
+    let updatedData = await User.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
+
+    return res.send({
+      result: true,
+      message: "User updated succesfully ",
+      data: updatedData,
+    });
+  } catch (err) {
+    return res.send({ result: false, message: err.message });
+  }
+};
+
+let logout = async (req, res) => {
+  if (!req.user) {
+    return res.send({ result: false, message: "Plese login " });
+  }
+
+  try {
+    return res
+      .clearCookie("Token")
+      .send({ result: true, message: "userLogout succesfully " });
+  } catch (err) {
+    return res.send({ result: false, message: err.message });
+  }
+};
+
+
+
+export { login, signup, getuser, updateuser, logout };

@@ -12,6 +12,8 @@ import SingleProduct from "./SingleProduct.jsx";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import ThemeContext from "./Utility/ThemeContext";
+import AppStore from "./Utility/AppStore";
+import { Provider } from "react-redux";
 // import Food from './Food.jsx'
 
 let Food = lazy(() => import("./Food.jsx"));
@@ -63,7 +65,9 @@ let Router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <Provider store={AppStore}>
   <ThemeContext>
   <RouterProvider router={Router}> </RouterProvider>
   </ThemeContext>
+  </Provider>
 );

@@ -13,9 +13,7 @@ let login = async (req, res) => {
 
     if (!existingUser) {
       // checking the user is present or not
-      return res
-        .status(404)
-        .send({ result: false, message: "User doesnot exist" });
+      return res.send({ result: false, message: "User doesnot exist" });
     }
 
     let response = await existingUser.checkPassword(password); // checking the password
@@ -30,9 +28,7 @@ let login = async (req, res) => {
         data: existingUser,
       });
     } else {
-      return res
-        .status(401)
-        .send({ result: false, message: "Password is incorrect " });
+      return res.send({ result: false, message: "Password is incorrect " });
     }
   } catch (err) {
     return res.send({ result: false, message: err.message });
@@ -41,15 +37,13 @@ let login = async (req, res) => {
 
 let signup = async (req, res) => {
   let { email } = req.body;
-  console.log(req.body)
+  console.log(req.body);
 
   try {
     let existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      return res
-        .status(409)
-        .send({ result: false, message: "User already Exist " });
+      return res.send({ result: false, message: "User already Exist " });
     }
 
     let newUser = new User(req.body); // we are creating the new user
@@ -59,7 +53,7 @@ let signup = async (req, res) => {
     let token = await tokenGeneration(user); // generating the token
     let option = { httpOnly: true, secure: true }; // options for cokkies
     return res
-      .status(200)
+
       .cookie("Token", token, option)
       .send({ result: true, message: "user created", data: user });
   } catch (err) {
@@ -113,7 +107,5 @@ let logout = async (req, res) => {
     return res.send({ result: false, message: err.message });
   }
 };
-
-
 
 export { login, signup, getuser, updateuser, logout };

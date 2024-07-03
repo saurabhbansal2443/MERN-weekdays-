@@ -1,25 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext , useState } from "react";
 import { Theme } from "./Utility/ThemeContext.jsx";
 import { useFormik } from "formik";
 import { signupSchema } from "./Utility/validationSchema.js";
+import { useSignupMutation } from "./Utility/authApi.js";
+import { Link, useNavigate } from "react-router-dom"
+
 
 const Signup = () => {
+  let [errMsg, setErrMsg] = useState(null);
   let { theme } = useContext(Theme);
+
+  let navigate = useNavigate();
 
   let lightTheme = "flex items-center justify-center min-h-[92vh] bg-white";
   let darkTheme = "flex items-center justify-center min-h-[92vh]";
 
+  const [signup , {isLoading}]= useSignupMutation();
+ 
+
   let signIn = async (values) => {
-    console.log(values);
-    let res = await fetch("http://localhost:5143/users/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    let data = await res.json();
-    console.log(data);
+    setErrMsg(null);
+   let result =  await signup(values)
+    console.log(result);
+    if(result.data.result == true ){
+      navigate("/");
+    }else{
+      setErrMsg(result.data.message)
+
+    }
   };
 
   let formik = useFormik({
@@ -141,15 +149,18 @@ const Signup = () => {
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
           >
-            Register
+           {isLoading ? <span className="loading loading-dots loading-lg"></span> : "Register"}
           </button>
         </form>
         <p className="text-center text-white mt-4">
           Already have an account?
-          <a href="#" className="text-indigo-500 font-semibold">
+          <Link to='/login' className="text-indigo-500 font-semibold">
             Sign In
-          </a>
+          </Link>
         </p>
+
+        <h2 className="text-white text-2xl text-center "> {errMsg ? errMsg : null }</h2>
+     
       </div>
     </div>
   );

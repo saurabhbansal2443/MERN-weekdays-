@@ -1,15 +1,32 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext , useState} from "react";
 import { Theme } from "./Utility/ThemeContext";
 import { useFormik } from "formik";
 import { loginSchema } from "./Utility/validationSchema";
+import { useLoginMutation } from "./Utility/authApi";
+import { useNavigate  , Link} from "react-router-dom";
 
 const Login= () => {
     let {theme } = useContext(Theme);
+    let [errMsg, setErrMsg] = useState(null)  
+
+    let navigate = useNavigate();
+
+    let [login , {isLoading }] = useLoginMutation();
   
   let lightTheme = "h-[92vh] flex items-center justify-center w-full bg-white";
   let darkTheme =
     "h-[92vh] flex items-center justify-center w-full bg-gray-750";
+
+    let loginfunction = async (values)=>{
+      setErrMsg(null);
+      let result = await login(values);
+       if(result.data.result == true ){
+        navigate("/");
+       }else{
+        setErrMsg(result.data.message)
+       }
+    }
 
   let formik = useFormik({
     initialValues: {
@@ -17,9 +34,9 @@ const Login= () => {
       password: "",
     },
     validationSchema: loginSchema,
-    onSubmit: (values, action) => {
+    onSubmit: async (values, action) => {
      
-      console.log(values);
+      await loginfunction(values)
 
       action.resetForm();
     },
@@ -74,17 +91,18 @@ const Login= () => {
           {formik.errors.password && formik.touched.password ?   <p className="text-red-600"> {formik.errors.password} </p>:null}
           </div>
           <div className="flex items-center justify-between mb-4">
-            <a href="#" className="text-xs text-indigo-500 ">
+            <Link to="/signup" className="text-xs text-indigo-500 ">
               Create Account
-            </a>
+            </Link>
           </div>
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Login
+            {isLoading ? <span className="loading loading-dots loading-lg"></span> : "Login"}
           </button>
         </form>
+        <h2 className="text-white text-2xl text-center "> {errMsg ? errMsg : null }</h2>
       </div>
     </div>
   );

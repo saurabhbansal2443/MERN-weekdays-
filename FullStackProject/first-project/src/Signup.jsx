@@ -2,13 +2,14 @@ import React, { useContext , useState } from "react";
 import { Theme } from "./Utility/ThemeContext.jsx";
 import { useFormik } from "formik";
 import { signupSchema } from "./Utility/validationSchema.js";
-import { useSignupMutation } from "./Utility/authApi.js";
+import { useGetUserQuery, useSignupMutation } from "./Utility/authApi.js";
 import { Link, useNavigate } from "react-router-dom"
 
 
 const Signup = () => {
   let [errMsg, setErrMsg] = useState(null);
   let { theme } = useContext(Theme);
+  let {refetch} = useGetUserQuery();
 
   let navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const Signup = () => {
    let result =  await signup(values)
     console.log(result);
     if(result.data.result == true ){
+      refetch()
       navigate("/");
     }else{
       setErrMsg(result.data.message)

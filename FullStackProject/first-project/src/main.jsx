@@ -14,18 +14,21 @@ import Signup from "./Signup.jsx";
 import ThemeContext from "./Utility/ThemeContext";
 import AppStore from "./Utility/AppStore";
 import { Provider } from "react-redux";
+import ProtectedRoute from "./Utility/ProtectedRoute.jsx";
 // import Food from './Food.jsx'
+
+let AppProtected = ProtectedRoute(App);
 
 let Food = lazy(() => import("./Food.jsx"));
 
 let Router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element:<AppProtected></AppProtected>,
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Home></Home>,
       },
       {
         path: "/about",

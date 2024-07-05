@@ -1,16 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { Theme } from "./Utility/ThemeContext";
 import { useSelector } from "react-redux";
+import { useGetUserQuery, useLogoutMutation } from "./Utility/authApi";
 
 let Navbar = () => {
   let { theme, setTheme } = useContext(Theme);
 
-  let totalProducts = useSelector((state) => state.cart.totalProducts);
+  let navigate = useNavigate();
+  let {refetch } = useGetUserQuery()
 
+  let totalProducts = useSelector((state) => state.cart.totalProducts);
   let handleThemeChange = () => {
     setTheme(theme == "light" ? "dark" : "light");
   };
+
+  let [logout , {isLoading , isError}] = useLogoutMutation();
+
+  let handleLogout = async () => {
+      await logout();
+        // refetch();
+      navigate("/login");
+  } 
 
   useEffect(() => {
     localStorage.setItem("Theme", theme);
@@ -81,7 +92,7 @@ let Navbar = () => {
             </svg>
           </label>
         </ul>
-        <li className="text-xl">Logout </li>
+        <li className="text-xl" onClick={handleLogout}>Logout </li>
       </div>
     </div>
   );

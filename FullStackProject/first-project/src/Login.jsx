@@ -3,7 +3,7 @@ import { useContext , useState} from "react";
 import { Theme } from "./Utility/ThemeContext";
 import { useFormik } from "formik";
 import { loginSchema } from "./Utility/validationSchema";
-import { useLoginMutation } from "./Utility/authApi";
+import { useGetUserQuery, useLoginMutation } from "./Utility/authApi";
 import { useNavigate  , Link} from "react-router-dom";
 
 const Login= () => {
@@ -13,6 +13,7 @@ const Login= () => {
     let navigate = useNavigate();
 
     let [login , {isLoading }] = useLoginMutation();
+    let {refetch } = useGetUserQuery();
   
   let lightTheme = "h-[92vh] flex items-center justify-center w-full bg-white";
   let darkTheme =
@@ -22,6 +23,7 @@ const Login= () => {
       setErrMsg(null);
       let result = await login(values);
        if(result.data.result == true ){
+        refetch();
         navigate("/");
        }else{
         setErrMsg(result.data.message)

@@ -24,7 +24,7 @@ const apiSlice = createApi({
     update: builder.mutation({
       query: (data) => ({
         url: "/update",
-        method: "PATCH",
+        method: "POST",
         body: data,
       }),
     }),
@@ -34,15 +34,15 @@ const apiSlice = createApi({
         method: "GET",
       }),
     }),
-    logout: builder.query({
+    logout: builder.mutation({
       query: () => ({
         url: "/logout",
-        method: "GET",
+        method: "POST",
       }),
     }),
   }),
 });
 
-export const {useLoginMutation , useLogoutQuery , useSignupMutation , useUpdateMutation , useGetUserQuery} = apiSlice;
+export const {useLoginMutation , useLogoutMutation , useSignupMutation , useUpdateMutation , useGetUserQuery} = apiSlice;
 
 export default apiSlice;

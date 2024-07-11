@@ -13,7 +13,7 @@ let Router = express.Router();
 Router.post("/signup", signup)
   .post("/login", login)
   .get("/getuser",auth ,  getuser)
-  .patch("/update",auth ,  updateuser)
-  .get("/logout" ,auth,  logout )
+  .post("/update",auth ,  updateuser)
+  .post("/logout" ,auth,  logout )
 
   export default Router;

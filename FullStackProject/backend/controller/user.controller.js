@@ -72,12 +72,16 @@ let getuser = (req, res) => {
 };
 
 let updateuser = async (req, res) => {
+
+  console.log("Update is running ")
   if (!req.user) {
     return res.send({ result: false, message: "Plese login " });
   }
 
   try {
     let user = req.user;
+
+
     let { _id } = user;
 
     let updatedData = await User.findByIdAndUpdate(_id, req.body, {

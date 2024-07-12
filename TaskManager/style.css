@@ -72,12 +72,14 @@ main {
   width: 15vw;
   background-color: #fbf3d5;
   margin: 1%;
+  position: relative;
+  z-index: 1;
 }
 
 .colorCont {
   width: 100%;
   height: 10%;
-  background-color: #a0153e;
+  /* background-color: #a0153e; */
 }
 
 .taskAddContainer {
@@ -88,10 +90,10 @@ main {
   border: 5px solid black;
   left: 32.5vw;
   top: 25vh;
- 
+  z-index: 2;
 }
 
-.noDisplay{
+.noDisplay {
   display: none;
 }
 
@@ -99,12 +101,11 @@ main {
   width: 100%;
   height: 78%;
   resize: none;
-  border: none ;
-  outline: none ;
-  padding: 1% ;
+  border: none;
+  outline: none;
+  padding: 1%;
   font-size: 2rem;
   background-color: #efbc9b;
-
 }
 
 .colorBorder {
@@ -118,4 +119,20 @@ main {
   justify-content: space-around;
   align-items: center;
   border-top: 5px solid black;
+}
+
+.textArea {
+  padding: 5px;
+  font-size: 2rem;
+  width: 100%;
+  height: 90%;
+
+  overflow: scroll;
+  word-wrap: break-word;
+}
+
+.lockIcon {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }
